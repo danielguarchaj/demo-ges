@@ -1,7 +1,6 @@
 <template>
   <!-- begin:: Header Topbar -->
   <div class="topbar">
-
     <!--begin: User Bar -->
     <KTQuickUser></KTQuickUser>
     <!--end: User Bar -->
@@ -36,7 +35,6 @@
 </style>
 
 <script>
-
 import KTQuickUser from "@/view/layout/extras/offcanvas/QuickUser.vue";
 import i18nService from "@/core/services/i18n.service.js";
 

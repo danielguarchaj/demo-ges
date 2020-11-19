@@ -36,7 +36,7 @@
         </a>
       </li>
     </router-link>
-        <router-link
+    <router-link
       to="/asignaciones"
       v-slot="{ href, navigate, isActive, isExactActive }"
     >

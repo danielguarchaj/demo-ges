@@ -1,7 +1,7 @@
 <style>
-  .table-list td {
-    vertical-align: middle;
-  }
+.table-list td {
+  vertical-align: middle;
+}
 </style>
 
 <template>
@@ -9,7 +9,7 @@
     <div class="card-header bg-transparent border-1">
       <h3 class="mb-0">
         <i class="py-0 fa text-primary" :class="icon"></i>
-        {{title}}
+        {{ title }}
       </h3>
     </div>
     <div class="card-body">
@@ -31,7 +31,9 @@
             <!-- <b class="text-info">{{ data.value.last.toUpperCase() }}</b>, <b>{{ data.value.first }}</b> -->
             <div class="row m-0">
               <div class="symbol symbol-40">
-                <span class="symbol-label font-size-h4 font-weight-bold bg-success">
+                <span
+                  class="symbol-label font-size-h4 font-weight-bold bg-success"
+                >
                   <i class="py-0 fa fa-image text-white"></i>
                 </span>
               </div>
@@ -51,7 +53,8 @@
         </b-table>
       </div>
       <div class="d-flex flex-row">
-        <button type="button" class="btn btn-primary btn-sm">Descargar
+        <button type="button" class="btn btn-primary btn-sm">
+          Descargar
           <i class="py-0 fa fa-file-archive text-white"></i>
         </button>
       </div>
@@ -70,7 +73,8 @@
       </div>
       <div class="mt-5 d-flex flex-row">
         <div class="font-weight-bold text-dark notification-controls">
-          <a href="#">ACTIVAR</a> / <a href="#">DESACTIVAR</a> Notificaciones a todos
+          <a href="#">ACTIVAR</a> / <a href="#">DESACTIVAR</a> Notificaciones a
+          todos
         </div>
       </div>
     </div>
@@ -78,42 +82,38 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 
-  import { mapGetters } from "vuex";
-
-  export default {
-    name: "listaRecursos",
-    components: {
-    },
-    props: ['title', 'icon'],
-    data() {
-      return {
-        // Note 'isActive' is left out and will not appear in the rendered table
-        fields: [
-          {
-            key: 'nombre',
-            label: 'Nombre',
-            sortable: true
-          },
-          {
-            key: 'tamano',
-            label: 'Tamaño',
-            sortable: false
-          }
-        ],
-        items: [
-          { isActive: true, nombre: 'Dickerson', tamano: '1378 kb' },
-          { isActive: false, nombre: 'Larsen', tamano: '1378 kb' },
-          { isActive: false, nombre: 'Geneva', tamano: '1378 kb' },
-          { isActive: true, nombre: 'Jami', tamano: '1378 kb' }
-        ]
-      };
-    },
-    computed: {
-      ...mapGetters(["layoutConfig"])
-    },
-    mounted() {
-
-    }
-  };
+export default {
+  name: "listaRecursos",
+  components: {},
+  props: ["title", "icon"],
+  data() {
+    return {
+      // Note 'isActive' is left out and will not appear in the rendered table
+      fields: [
+        {
+          key: "nombre",
+          label: "Nombre",
+          sortable: true
+        },
+        {
+          key: "tamano",
+          label: "Tamaño",
+          sortable: false
+        }
+      ],
+      items: [
+        { isActive: true, nombre: "Dickerson", tamano: "1378 kb" },
+        { isActive: false, nombre: "Larsen", tamano: "1378 kb" },
+        { isActive: false, nombre: "Geneva", tamano: "1378 kb" },
+        { isActive: true, nombre: "Jami", tamano: "1378 kb" }
+      ]
+    };
+  },
+  computed: {
+    ...mapGetters(["layoutConfig"])
+  },
+  mounted() {}
+};
 </script>

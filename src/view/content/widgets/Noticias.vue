@@ -1,8 +1,8 @@
 <style>
-  .symbol-40 {
-    width: 40px;
-    height: 40px;
-  }
+.symbol-40 {
+  width: 40px;
+  height: 40px;
+}
 </style>
 
 <template>
@@ -10,11 +10,14 @@
     <div class="card-header bg-transparent border-1">
       <h3 class="mb-0">
         <i class="py-0 fa fa-bullhorn text-primary"></i>
-        Noticias</h3>
+        Noticias
+      </h3>
     </div>
     <div class="card-body">
       <div class="d-flex flex-row-reverse">
-        <button type="button" class="btn btn-primary btn-sm">Agregar una Noticia</button>
+        <button type="button" class="btn btn-primary btn-sm">
+          Agregar una Noticia
+        </button>
       </div>
 
       <div class="noticias-list">
@@ -22,7 +25,9 @@
           <b-media tag="li">
             <div class="row m-0">
               <div class="symbol symbol-40">
-                <span class="symbol-label text-light font-size-h4 font-weight-bold bg-primary">
+                <span
+                  class="symbol-label text-light font-size-h4 font-weight-bold bg-primary"
+                >
                   S
                 </span>
               </div>
@@ -54,22 +59,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 
-  import { mapGetters } from "vuex";
-
-  export default {
-    name: "noticias",
-    components: {
-    },
-    data() {
-      return {
-      };
-    },
-    computed: {
-      ...mapGetters(["layoutConfig"])
-    },
-    mounted() {
-
-    }
-  };
+export default {
+  name: "noticias",
+  components: {},
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters(["layoutConfig"])
+  },
+  mounted() {}
+};
 </script>

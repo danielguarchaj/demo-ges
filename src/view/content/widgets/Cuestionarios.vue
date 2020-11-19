@@ -1,7 +1,7 @@
 <style>
-  .table-list td {
-    vertical-align: middle;
-  }
+.table-list td {
+  vertical-align: middle;
+}
 </style>
 
 <template>
@@ -20,7 +20,9 @@
             <a href="#" class="font-weight-bold m-0">{{ data.value }}</a>
           </template>
           <template #cell(intentos)="data">
-            <a href="#" class="font-weight-bold m-0">Intentos {{ data.value }}</a>
+            <a href="#" class="font-weight-bold m-0"
+              >Intentos {{ data.value }}</a
+            >
           </template>
         </b-table>
       </div>
@@ -29,42 +31,38 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 
-  import { mapGetters } from "vuex";
-
-  export default {
-    name: "listaRecursos",
-    components: {
-    },
-    props: ['title', 'icon'],
-    data() {
-      return {
-        // Note 'isActive' is left out and will not appear in the rendered table
-        fields: [
-          {
-            key: 'titulo',
-            label: 'Título',
-            sortable: true
-          },
-          {
-            key: 'intentos',
-            label: 'Intentos',
-            sortable: true
-          }
-        ],
-        items: [
-          { isActive: true, titulo: 'Dickerson', intentos: '13' },
-          { isActive: false, titulo: 'Larsen', intentos: '1' },
-          { isActive: false, titulo: 'Geneva', intentos: '7' },
-          { isActive: true, titulo: 'Jami', intentos: '8' }
-        ]
-      };
-    },
-    computed: {
-      ...mapGetters(["layoutConfig"])
-    },
-    mounted() {
-
-    }
-  };
+export default {
+  name: "listaRecursos",
+  components: {},
+  props: ["title", "icon"],
+  data() {
+    return {
+      // Note 'isActive' is left out and will not appear in the rendered table
+      fields: [
+        {
+          key: "titulo",
+          label: "Título",
+          sortable: true
+        },
+        {
+          key: "intentos",
+          label: "Intentos",
+          sortable: true
+        }
+      ],
+      items: [
+        { isActive: true, titulo: "Dickerson", intentos: "13" },
+        { isActive: false, titulo: "Larsen", intentos: "1" },
+        { isActive: false, titulo: "Geneva", intentos: "7" },
+        { isActive: true, titulo: "Jami", intentos: "8" }
+      ]
+    };
+  },
+  computed: {
+    ...mapGetters(["layoutConfig"])
+  },
+  mounted() {}
+};
 </script>

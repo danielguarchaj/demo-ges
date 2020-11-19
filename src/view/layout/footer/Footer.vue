@@ -5,8 +5,12 @@
       class="d-flex flex-column flex-md-row align-items-center justify-content-center"
       v-bind:class="{ 'container-fluid': widthFluid, container: !widthFluid }"
     >
-    <img id="img-footer" alt="logo-footer" class="img-footer w-100px " :src="layoutConfig('self.logo.footer')">
-
+      <img
+        id="img-footer"
+        alt="logo-footer"
+        class="img-footer w-100px "
+        :src="layoutConfig('self.logo.footer')"
+      />
     </div>
     <!--end::Container-->
   </div>

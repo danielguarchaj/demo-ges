@@ -32,7 +32,7 @@
           <div class="d-flex flex-column-fluid mx-5">
             <div
               :class="{
-                'container-fluid': contentFluid,
+                'container-fluid': contentFluid
               }"
               class="w-100"
             >

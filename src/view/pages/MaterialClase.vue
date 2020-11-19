@@ -7,8 +7,14 @@
         <Noticias></Noticias>
       </div>
       <div class="col-md-6">
-        <ListaRecursos title="Apuntes de clase" icon="fa-folder"></ListaRecursos>
-        <ListaRecursos title="Material de Apoyo" icon="fa-folder"></ListaRecursos>
+        <ListaRecursos
+          title="Apuntes de clase"
+          icon="fa-folder"
+        ></ListaRecursos>
+        <ListaRecursos
+          title="Material de Apoyo"
+          icon="fa-folder"
+        ></ListaRecursos>
         <Cuestionarios></Cuestionarios>
       </div>
     </div>
