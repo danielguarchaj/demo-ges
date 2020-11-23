@@ -42,47 +42,65 @@
         </div>
       </template>
       <template #cell(fecha_entrega)="data">
-        <div class="d-flex flex-row justify-content-around align-items-center">
-          <p>{{ data.value }}</p>
-          <a href="#" class="btn btn-secondary btn-sm text-dark">
-            <i class="fas fa-download"></i>
-          </a>
-          <a href="#" class="btn btn-secondary btn-sm text-dark">
-            <i class="fas fa-users"></i>
-          </a>
+        <div class="d-flex flex-row justify-content-start align-items-center">
+          <div>
+            <p>{{ data.value }}</p>
+          </div>
+          <div class="ml-3">
+            <a href="#" class="btn btn-secondary btn-sm mr-1">
+              <i class="fas fa-download text-muted"></i>
+            </a>
+            <a href="#" class="btn btn-secondary btn-sm mr-1">
+              <i class="fas fa-users text-muted"></i>
+            </a>
+          </div>
         </div>
       </template>
+      <template #cell(valor)="data">
+        <strong>{{ data.value.puntos }} pts.</strong>
+        <p>{{ data.value.porcentaje }}%</p>
+      </template>
       <template #cell(solucion)="data">
-        <div class="d-flex flex-row justify-content-around">
-          <a
-            href="#"
+        <div class="d-flex flex-row justify-content-start">
+          <button
+            type="button"
             class="btn btn-secondary btn-sm text-dark"
             v-b-modal.modal-subir-solucion
           >
             Subir Solución
-          </a>
+          </button>
         </div>
       </template>
       <template #cell(evaluacion)="data">
-        <div class="d-flex flex-row justify-content-around">
-          <a href="#" target="_self" class="badge mr-1 badge-secondary">
+        <div class="d-flex flex-row justify-content-start">
+          <button
+            type="button"
+            target="_self"
+            class="badge mr-1 badge-secondary"
+          >
             Sin Respuesta
-          </a>
+          </button>
         </div>
       </template>
       <template #cell(actions_2)="data">
-        <div class="d-flex flex-row justify-content-around">
-          <a href="#" class="btn btn-primary btn-sm text-light"> Evaluar </a>
+        <div class="d-flex flex-row justify-content-start">
+          <button type="button" class="btn btn-primary btn-sm text-light">
+            Evaluar
+          </button>
         </div>
       </template>
       <template #cell(actions_3)="data">
-        <div class="d-flex flex-row justify-content-around">
-          <a href="#" class="btn btn-secondary text-dark">
-            <i class="fas fa-pencil-alt"></i>
-          </a>
-          <a href="#" class="btn btn-secondary" @click="showConfirmDelete">
+        <div class="d-flex flex-row justify-content-center">
+          <button href="#" class="btn btn-secondary text-dark mr-1">
+            <i class="fas fa-pencil-alt" @click="editRecord(data)"></i>
+          </button>
+          <button
+            href="#"
+            class="btn btn-secondary"
+            @click="showConfirmDelete(data)"
+          >
             <i class="fas fa-trash-alt text-danger"></i>
-          </a>
+          </button>
         </div>
       </template>
       <template #row-details="row">
@@ -140,6 +158,12 @@
           </div>
         </div>
       </template>
+      <template #table-caption>
+        <div class="row d-flex justify-content-end text-dark">
+          <strong>Total = 0 pts</strong>
+          <p class="text-muted">(0%)</p>
+        </div>
+      </template>
     </b-table>
   </div>
 </template>
@@ -150,42 +174,107 @@ import { mapGetters } from "vuex";
 export default {
   name: "table",
   components: {},
-  props: ["fields", "items"],
+  props: ["fields", "items", "tipoAsignacion"],
   data() {
     return {
-      tareaNombre: ""
+      tareaNombre: "",
+      nuevoItems: []
     };
   },
   computed: {
-    ...mapGetters(["layoutConfig"])
+    ...mapGetters(["layoutConfig"]),
+    totalPorcentaje() {
+      let totalPuntos = 0;
+      for (const item of this.$parent.items) {
+        totalPuntos += item.valor.puntos;
+      }
+      return totalPuntos;
+    }
   },
   methods: {
-    showConfirmDelete() {
-      this.boxTwo = "";
+    // totalPuntos: items => {
+    //   let totalPuntos = 0;
+    //   for (const item of items) {
+    //     totalPuntos += item.valor.puntos;
+    //   }
+    //   return totalPuntos.toFixed(2);
+    // },
+    // totalPorcentaje: items => {
+    //   let totalPorcentaje = 0;
+    //   for (const item of items) {
+    //     totalPorcentaje += item.valor.porcentaje;
+    //   }
+    //   return totalPorcentaje.toFixed(2);
+    // },
+    editRecord(data) {
+      this.$emit("editRecord", {
+        index: data.index,
+        listName: this.tipoAsignacion
+      });
+    },
+    showConfirmDelete(item) {
+      let messageDialog = "";
+      let title = "";
+      let okTitleText = "";
+      switch (this.tipoAsignacion) {
+        case "tareas":
+          title = "Tarea";
+          okTitleText = "Si, realmente deseo eliminar esta tarea";
+          messageDialog = `
+              ¿Esta seguro de querer eliminar la tarea "${item.item.nombre}"? 
+              (Si usted elimina esta tarea, toda la información asociada a la tarea, como respuestas, soluciones, entre otros, serán eliminados también)
+            `;
+          break;
+        case "proyectos":
+          title = "Proyecto";
+          okTitleText = "Si, realmente deseo eliminar este proyecto";
+          messageDialog = `
+              ¿Esta seguro de querer eliminar el proyecto "${item.item.nombre}"? 
+              (Si usted elimina este proyecto, toda la información asociada a la proyecto, como respuestas, soluciones, entre otros, serán eliminados también)
+            `;
+          break;
+        case "finales":
+          title = "Examen Final";
+          okTitleText = "Si, realmente deseo eliminar este examen final";
+          messageDialog = `
+              ¿Esta seguro de querer eliminar el examen final "${item.item.nombre}"? 
+              (Si usted elimina este examen final, toda la información asociada a la examen final, como respuestas, soluciones, entre otros, serán eliminados también)
+            `;
+          break;
+        case "parciales":
+          title = "Examen Parcial";
+          okTitleText = "Si, realmente deseo eliminar este examen parcial";
+          messageDialog = `
+              ¿Esta seguro de querer eliminar el examen parcial "${item.item.nombre}"? 
+              (Si usted elimina este examen parcial, toda la información asociada a la examen parcial, como respuestas, soluciones, entre otros, serán eliminados también)
+            `;
+          break;
+        default:
+          break;
+      }
       this.$bvModal
-        .msgBoxConfirm(
-          `
-                        ¿Esta seguro de querer eliminar la tarea "Arsenio Dennis"? 
-                        (Si usted elimina esta tarea, toda la información asociada a la tarea, como respuestas, soluciones, entre otros, serán eliminados también)
-                    `,
-          {
-            title: "Eliminar Tarea",
-            size: "lg",
-            buttonSize: "sm",
-            okVariant: "primary",
-            cancelVariant: "primary",
-            okTitle: "Si, realmente deseo eliminar esta tarea",
-            cancelTitle: "No, quiero cancelar mi solicitud",
-            footerClass: "p-2",
-            hideHeaderClose: false,
-            centered: true
+        .msgBoxConfirm(messageDialog, {
+          title: `Eliminar ${title}`,
+          size: "lg",
+          buttonSize: "sm",
+          okVariant: "primary",
+          cancelVariant: "primary",
+          okTitle: okTitleText,
+          cancelTitle: "No, quiero cancelar mi solicitud",
+          footerClass: "p-2",
+          hideHeaderClose: false,
+          centered: true
+        })
+        .then(confirmed => {
+          if (confirmed) {
+            this.$emit("deleteItem", {
+              index: item.index,
+              listName: this.tipoAsignacion
+            });
           }
-        )
-        .then(value => {
-          alert(value);
         })
         .catch(err => {
-          alert(err);
+          console.log(err);
         });
     }
   },
